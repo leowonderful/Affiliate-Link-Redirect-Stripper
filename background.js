@@ -7,6 +7,12 @@ chrome.webRequest.onBeforeRequest.addListener(
         return { redirectUrl: decodeURIComponent(redirectUrl) };
       }
     }
+    else if (url.host === "redirect.viglink.com") {
+      const redirectUrl = url.searchParams.get("u");
+      if (redirectUrl) {
+        return { redirectUrl: decodeURIComponent(redirectUrl) };
+      }
+    }
   },
   { urls: ["<all_urls>"] },
   ["blocking"]
