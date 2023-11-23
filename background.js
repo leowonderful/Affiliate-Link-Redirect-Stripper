@@ -13,6 +13,16 @@ chrome.webRequest.onBeforeRequest.addListener(
         return { redirectUrl: decodeURIComponent(redirectUrl) };
       }
     }
+	else if (url.host === "events.release.narrativ.com" && url.pathname.startsWith("/api/v0/client_redirect/")) {
+      const encodedRedirectUrl = url.searchParams.get("url");
+      if (encodedRedirectUrl) {
+        const decodedUrl = new URL(decodeURIComponent(encodedRedirectUrl));
+        const murl = decodedUrl.searchParams.get("murl");
+        if (murl) {
+          return { redirectUrl: decodeURIComponent(murl) };
+        }
+      }
+    }
   },
   { urls: ["<all_urls>"] },
   ["blocking"]
